@@ -14,39 +14,42 @@
  * }
  */
 class Solution {
-    ArrayList<String> list = new ArrayList<>();
+          List<String> list = new ArrayList<>();
+
     public List<String> binaryTreePaths(TreeNode root) {
-        if(root==null)
-        {
-              return list ;
-        }
+  
+        dfspath(root,"");
 
-        dfs(root,"") ;
-        return list;
+        return list ;
     }
- 
-     
-   public void dfs(TreeNode root ,String ans )
-   {
+
+
+
+    public void dfspath(TreeNode root , String path)
+    {
+        //base case 
+
         if(root==null)
         {
-            return ;
+            return  ;
         }
 
-        ans+=root.val ;
-         
-          if(!(root.left==null && root.right==null))
+        if(path.length()==0)
         {
-            ans+= "->";
+            path=  String .valueOf(root.val);
         }
-       
+        else{
+            path =path + "->" + root.val ;
+        }
+        
         if(root.left==null && root.right==null)
         {
-           list.add(ans);
+            list.add(path);
         }
 
-        dfs(root.left,ans);
-        dfs(root.right,ans);
-   }
+        dfspath(root.left,path);
+        dfspath(root.right,path);
+    }
 
+    
 }
