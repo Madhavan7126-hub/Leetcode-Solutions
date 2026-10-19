@@ -1,67 +1,65 @@
+
 import java.util.*;
 
 class Solution {
-
     public List<List<Integer>> threeSum(int[] nums) {
 
         List<List<Integer>> result = new ArrayList<>();
 
-        // Step 1: Sort the array
         Arrays.sort(nums);
 
         int n = nums.length;
+        int i = 0;
 
-        // Step 2: Fix one element
-        for (int i = 0; i < n - 2; i++) {
+        while (i < n - 2) {
 
-            // Skip duplicates for i
+            // Skip duplicate fixed values
             if (i > 0 && nums[i] == nums[i - 1]) {
+                i++;
                 continue;
             }
 
             int left = i + 1;
             int right = n - 1;
 
-            // Step 3: Two pointer search
             while (left < right) {
 
                 int sum = nums[i] + nums[left] + nums[right];
 
-                // Found triplet
                 if (sum == 0) {
 
-                    result.add(Arrays.asList(
-                            nums[i],
-                            nums[left],
-                            nums[right]
-                    ));
+                    List<Integer> triplet = new ArrayList<>();
+
+                    triplet.add(nums[i]);
+                    triplet.add(nums[left]);
+                    triplet.add(nums[right]);
+
+                    result.add(triplet);
+
+                    left++;
+                    right--;
 
                     // Skip duplicate left values
                     while (left < right &&
-                           nums[left] == nums[left + 1]) {
+                           nums[left] == nums[left - 1]) {
                         left++;
                     }
 
                     // Skip duplicate right values
                     while (left < right &&
-                           nums[right] == nums[right - 1]) {
+                           nums[right] == nums[right + 1]) {
                         right--;
                     }
-
+                }
+                else if (sum < 0) {
                     left++;
-                    right--;
                 }
-
-                // Need smaller sum
-                else if (sum > 0) {
-                    right--;
-                }
-
-                // Need bigger sum
                 else {
-                    left++;
+                    right--;
                 }
             }
+
+            i++;
         }
 
         return result;
